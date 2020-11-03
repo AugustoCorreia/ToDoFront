@@ -1,0 +1,164 @@
+<div class="main-content">
+    <div class="container-fluid">
+
+        <!-- Modal Add -->
+        <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="add-form" (ngSubmit)="f.form.valid && saveTask(f)" #f="ngForm" novalidate>
+                            <div class="form-group">
+                                <label for="title">Título</label>
+                                <input type="text" [(ngModel)]="task.title" id="title" name="title" #model="ngModel"
+                                    required class="form-control" placeholder="Digite o Título">
+
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Descrição</label>
+                                <input type="text" [(ngModel)]="task.description" id="description" name="description"
+                                    #color="ngModel" required class="form-control" placeholder="Digite a Descrição">
+
+                            </div>
+                            <div class="form-group">
+                                <input type="datetime-local" class="form-controll" name="date" id="date"
+                                    [(ngModel)]="task.taskDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Select de exemplo</label>
+                                <select class="form-control" [(ngModel)]="task.status" id="exampleFormControlSelect1">
+                                    <option value="0">ToDo</option>
+                                    <option value="1">InProgress</option>
+                                    <option value="2">Done</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="timeSpent"> Tempo Gasto H</label>
+                                <input type="number" class="form-controll" name="timeSpent" id="timeSpent"
+                                    [(ngModel)]="task.timeSpent">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-add-car"  data-dismiss="modal">Salvar</button>
+                            <button type="button" class="btn btn-secondary" (click)="cleanForm(f)"
+                                data-dismiss="modal">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Fim Modal-->
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-primary ">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">Tasks: </span>
+                                <button type="button" class="btn btn-link btn-lg btn-just-icon pull-right"
+                                    data-toggle="modal" data-target="#ModalAdd">
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="profile">
+                                <table class="table">
+                                    <tbody>
+                                        <tr *ngFor="let item of taskList">
+                                            <td>{{item.title}}
+                                                <br>{{item.description}}
+                                            </td>
+                                            <td class="td-actions text-right">
+                                                <button type="button"
+                                                    class="btn btn-primary btn-link btn-sm btn-just-icon"
+                                                    data-toggle="modal" data-target="#ModalEdit">
+                                                    <i class="material-icons" (click)="editTask(item)">edit</i>
+                                                </button>
+                                                <button mat-raised-button type="button" matTooltip="Remove"
+                                                    class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            </td>
+                                            <!-- Modal Edit -->
+                                            <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog"
+                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Editar
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="add-form" (ngSubmit)="f.form.valid && saveTask(f)"
+                                                                #f="ngForm" novalidate>
+                                                                <div class="form-group">
+                                                                    <label for="title">Título {{item.title}}</label>
+                                                                    <input type="text" [(ngModel)]="task.title"
+                                                                        id="title" name="title" 
+                                                                        required class="form-control"
+                                                                        placeholder="Digite o Título" value="{{item.title}}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="description">Descrição</label>
+                                                                    <input type="text" [(ngModel)]="task.description" id="description" name="description"
+                                                                        #color="ngModel" required class="form-control" placeholder="Digite a Descrição">
+                                    
+                                                                </div>
+                                                         
+                                                                <div class="form-group">
+                                                                    <input type="datetime-local" class="form-controll"
+                                                                        name="taskDate" id="taskDate"
+                                                                        [(ngModel)]="task.taskDate">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlSelect1">Status</label>
+                                                                    <select class="form-control"
+                                                                        [(ngModel)]="task.status"
+                                                                        id="exampleFormControlSelect1" name="status">
+                                                                        <option value="0">ToDo</option>
+                                                                        <option value="1">InProgress</option>
+                                                                        <option value="2">Done</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="timeSpent"> Tempo Gasto H</label>
+                                                                    <input type="number" class="form-controll"
+                                                                        name="timeSpent" id="timeSpent"
+                                                                        [(ngModel)]="task.timeSpent">
+                                                                </div>
+
+                                                                <button type="submit"
+                                                                    class="btn btn-primary btn-add-car"  data-dismiss="modal">Salvar</button>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    (click)="cleanForm(f)"
+                                                                    data-dismiss="modal">Close</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--Fim Modal-->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

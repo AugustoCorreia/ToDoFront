@@ -10,19 +10,16 @@ import { TasksService } from '../services/tasks.service';
 })
 export class DashboardComponent implements OnInit {
   task = {} as Tasks;
-  taskList:Tasks[];
+  taskList:any=[];
 
   constructor(public taskservice:TasksService) {}
+
   async ngOnInit(){
     await this.getAllTasks();
-    console.log(this.taskList);
-    
   }
 
   async getAllTasks(){
-    await this.taskservice.getTasks().subscribe((tasks: Tasks[]) => {
-      this.taskList = tasks;
-    });
+    await this.taskservice.getTasks().subscribe((tasks: Tasks[]) => {this.taskList = tasks;});
   }
 
 
